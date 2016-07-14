@@ -1,0 +1,39 @@
+name:                servant-route
+version:             0.1.0.0
+synopsis:            Type-safe web routes generated from a servant DSL
+description:         Please see README.md
+homepage:            https://github.com/dmjio/servant-route
+license:             BSD3
+license-file:        LICENSE
+author:              David Johnson
+maintainer:          djohnson.m@gmail.com
+copyright:           2016 David Johnson
+category:            Web
+build-type:          Simple
+extra-source-files: README.md
+cabal-version:       >=1.10
+
+executable example
+  main-is: Main.hs
+  hs-source-dirs:      example
+  build-depends:       attoparsec
+                     , base >= 4.7 && < 6
+                     , servant
+                     , template-haskell
+                     , text
+                     , servant-route
+  default-language:    Haskell2010
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Servant.Route
+  build-depends:       attoparsec
+                     , base >= 4.7 && < 6
+                     , servant
+                     , template-haskell
+                     , text
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/githubuser/servant-route
