@@ -36,4 +36,4 @@ library
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/servant-route
+  location: https://github.com/dmjio/servant-route
