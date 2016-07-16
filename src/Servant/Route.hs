@@ -30,13 +30,16 @@ instance (Typeable typ, HasRoute api, KnownSymbol name) =>
 
 instance (Typeable typ, HasRoute api, KnownSymbol name) =>
   HasRoute (QueryParam name typ :> api) where
-    route Proxy (n,xs) f = route (Proxy :: Proxy api) (n, xs ++ [typ]) f
-      where
-        typ = ConT . mkName . show . typeRep $ (Proxy :: Proxy typ)
+    route Proxy (n,xs) f = route (Proxy :: Proxy api) (n, xs) f  
+
+instance (Typeable typ, HasRoute api, KnownSymbol name) =>
+  HasRoute (QueryParams name typ :> api) where
+    route Proxy (n,xs) f = route (Proxy :: Proxy api) (n, xs) f  
 
 instance (HasRoute api, KnownSymbol name) =>
   HasRoute (QueryFlag name :> api) where
-    route Proxy (n,xs) f = route (Proxy :: Proxy api) (n, xs) f
+    route Proxy (n,xs) f =
+      route (Proxy :: Proxy api) (n, xs) f
 
 instance (HasRoute l, HasRoute r) => HasRoute (l :<|> r) where
     route Proxy (n,xs) f =
@@ -45,9 +48,10 @@ instance (HasRoute l, HasRoute r) => HasRoute (l :<|> r) where
 
 instance (KnownSymbol sym, HasRoute api) =>
   HasRoute (sym :> api) where
-    route Proxy (n,xs) f = route (Proxy :: Proxy api) (n ++ nam, xs) f
-      where
-        nam = capitalize $ symbolVal (Proxy :: Proxy sym)
+    route Proxy (n,xs) f =
+      route (Proxy :: Proxy api) (n ++ nam, xs) f
+        where
+          nam = capitalize $ symbolVal (Proxy :: Proxy sym)
 
 instance HasRoute api => HasRoute (HttpVersion :> api) where
     route Proxy (n,xs) f = route (Proxy :: Proxy api) (n, xs) f  
@@ -85,7 +89,7 @@ instance {-# overlapping #-}
          ) => HasRoute (Verb method status ctypes (Headers h a)) where
     route Proxy (n,xs) f = [ NormalC nam typs ]
       where
-        typs = map (IsStrict,) xs
+        typs = map (NotStrict,) xs
         nam = mkName $ capitalize (f n)
 
 capitalize :: String -> String
