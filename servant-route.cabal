@@ -6,8 +6,8 @@ homepage:            https://github.com/dmjio/servant-route
 license:             BSD3
 license-file:        LICENSE
 author:              David Johnson
-maintainer:          djohnson.m@gmail.com
-copyright:           2016 David Johnson
+maintainer:          code@dmj.io
+copyright:           2025 David Johnson
 category:            Web
 build-type:          Simple
 extra-source-files: README.md
